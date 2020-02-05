@@ -3,10 +3,7 @@ class Breezer
     absolute_lockfile_path = File.join(lockfile_path)
     absolute_gemfile_path = File.join(gemfile_path)
     ENV['BUNDLE_GEMFILE'] = absolute_gemfile_path
-    
-    puts "absolute_lockfile_path: #{absolute_lockfile_path}"
-    puts "absolute_gemfile_path: #{absolute_gemfile_path}"
-    
+
     deps = Parser.deps(absolute_lockfile_path, options)
 
     gemfile = Bundler.read_file(absolute_gemfile_path)

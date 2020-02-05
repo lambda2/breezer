@@ -62,7 +62,7 @@ class Breezer::Freezer
     segments = [*gv.canonical_segments, 0, 0, 0].first(3)
     case options[:level]
     when "major"
-      "~> #{segments.first.join(".")}"
+      "~> #{segments.first}"
     when "minor"
       "~> #{segments.first(2).join(".")}"
     when "patch"
