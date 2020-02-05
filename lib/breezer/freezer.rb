@@ -3,13 +3,11 @@ require 'bundler'
 
 class Breezer::Freezer
 
-  GEM_REGEX = %r{gem[\s]+(?<fullname>['"](?<name>[\w\-_]+)['"])(?<fullversion>,?[\s]?(?<version>['"][~><=]+[\s]?[\d\.]+['"]))?(?<fullsecversion>,?[\s]?(?<secversion>['"][~><=]+[\s]?[\d\.]+['"]))?}
+  GEM_REGEX = %r{gem[\s]+(?<fullname>['"](?<name>[\w\-_]+)['"])(?<fullversion>,?[\s]?['"](?<version>[~><=]+[\s]?[\d\.]+)['"])?(?<fullsecversion>,?[\s]?['"](?<secversion>[~><=]+[\s]?[\d\.]+)['"])?}
   
   def self.update_gemfile!(gemfile, deps, **options)
     new_gemfile = []
     gemfile.split("\n").each {|line| new_gemfile << parse(line, deps, options) }
-    puts "New gemfile:"
-    puts new_gemfile.join("\n")
     new_gemfile.join("\n")
   end
 
@@ -19,17 +17,17 @@ class Breezer::Freezer
     matches = line.match(GEM_REGEX)
     puts "  MATCHES: #{matches.inspect}"
     # Drop lines if no gem declared
-    puts "Continue (line =~ /gem[\s]+/) ? => #{(line =~ /gem[\s]+/).inspect}"
+    # puts "Continue (line =~ /gem[\s]+/) ? => #{(line =~ /gem[\s]+/).inspect}"
     return line if (line =~ /gem[\s]+/).nil?
 
     # Drop line if it's a comment
-    puts "Continue (line =~ /^[\s]?#/) ? => #{(line =~ /^[\s]?#/).inspect}"
+    # puts "Continue (line =~ /^[\s]?#/) ? => #{(line =~ /^[\s]?#/).inspect}"
     return line unless (line =~ /^[\s]?#/).nil?
 
     matches = line.match(GEM_REGEX)
 
     # return the line if we didn't matched a name
-    puts "Continue (matches[:name]) ? => #{(matches[:name]).inspect}"
+    # puts "Continue (matches[:name]) ? => #{(matches[:name]).inspect}"
     return line unless matches[:name]
 
     good_version = deps[matches[:name]]
@@ -37,8 +35,8 @@ class Breezer::Freezer
     
     puts "  Adding version: '#{version_string}'"
     # return the line if we didn't find a version
-    puts "Continue (good_version) ? => #{(good_version).inspect}"
-    return line unless good_version
+    # puts "Continue (good_version) ? => #{(good_version).inspect}"
+    return line unless (good_version && version_string)
 
     # if we already have a version and we don't want to override
     return line if matches[:version] && options[:preserve]
@@ -59,6 +57,8 @@ class Breezer::Freezer
     options = {level: 'patch'}.merge(options)
 
     gv = Gem::Version.create(version)
+    return unless gv
+
     segments = [*gv.canonical_segments, 0, 0, 0].first(3)
     case options[:level]
     when "major"
