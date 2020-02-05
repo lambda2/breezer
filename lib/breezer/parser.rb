@@ -3,6 +3,7 @@ require 'bundler'
 class Breezer::Parser
   def self.deps(lockfile_path = 'Gemfile.lock', **options)
     lockfile = Bundler::LockfileParser.new(Bundler.read_file(lockfile_path))
+    specs = lockfile.specs
     gems_hash = Hash.new.tap do |h|
       specs.each {|s| h[s.name] = {spec: s, dependencies: s.dependencies.map(&:name)}}
     end
@@ -15,5 +16,6 @@ class Breezer::Parser
       puts "Mapped dependencies:"
       relevant_specs.each {|e| puts "#{e.name} #{e.version}"}
     end
+    relevant_specs
   end
 end

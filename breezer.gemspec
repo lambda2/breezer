@@ -18,5 +18,9 @@ Gem::Specification.new do |s|
   s.summary = %q{Breezer!}
   s.license       = 'MIT'
 
+  s.required_ruby_version     = ">= 2.4.0"
+  s.required_rubygems_version = ">= 2.7.0"
+
+  s.add_runtime_dependency("bundler", "~> 2.0")
 end
 
