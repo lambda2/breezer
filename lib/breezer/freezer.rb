@@ -13,29 +13,22 @@ class Breezer::Freezer
 
   def self.parse(line, deps, **options)
 
-    puts "  Parsing line: '#{line}'"
     matches = line.match(GEM_REGEX)
-    puts "  MATCHES: #{matches.inspect}"
     # Drop lines if no gem declared
-    # puts "Continue (line =~ /gem[\s]+/) ? => #{(line =~ /gem[\s]+/).inspect}"
     return line if (line =~ /gem[\s]+/).nil?
 
     # Drop line if it's a comment
-    # puts "Continue (line =~ /^[\s]?#/) ? => #{(line =~ /^[\s]?#/).inspect}"
     return line unless (line =~ /^[\s]?#/).nil?
 
     matches = line.match(GEM_REGEX)
 
     # return the line if we didn't matched a name
-    # puts "Continue (matches[:name]) ? => #{(matches[:name]).inspect}"
     return line unless matches[:name]
 
     good_version = deps[matches[:name]]
     version_string = get_version_string(good_version, options)
     
-    puts "  Adding version: '#{version_string}'"
     # return the line if we didn't find a version
-    # puts "Continue (good_version) ? => #{(good_version).inspect}"
     return line unless (good_version && version_string)
 
     # if we already have a version and we don't want to override
