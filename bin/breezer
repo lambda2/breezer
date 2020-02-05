@@ -1,4 +1,45 @@
 #!/usr/bin/env ruby
 
+require 'bundler'
+
+puts Bundler::VERSION
+
 require 'breezer'
-puts Breezer.hi(ARGV[0])
+require 'optparse'
+
+gemfile_dir = ARGV[1] || '.'
+
+gemfile_file = File.directory?(gemfile_dir) ? gemfile_dir : File.join(gemfile_dir, 'Gemfile')
+lockfile_file = "#{gemfile_file}.lock"
+
+options = {
+  debug: false
+}
+
+OptionParser.new do |parser|
+  parser.banner = "Usage: breezer DIR [options]"
+
+  parser.on("-l", "--level [major|minor|patch|exact]", "Set the minimum level of gem updates (default: patch). Set to 'exact' to lock gems versions (not recommended)") do |v|
+    raise "Error: level must be one of: 'major', 'minor', 'patch' or 'exact', #{v} given." unless v.in?(['major', 'minor', 'patch', 'exact'])
+    options[:level] = v
+  end
+
+  parser.on("-L", "--lockfile NAME", "Use different lockfile (default: Gemfile.lock)") do |v|
+    lockfile_file = v
+  end
+
+  parser.on("-d", "--dry-run", "Print the updated Gemfile instead of writing it") do
+    options[:dry] = true
+  end
+
+  parser.on("-o", "--output", "The output file (default: Gemfile)") do |v|
+    options[:output] = v
+  end
+
+  parser.on("-h", "--help", "Show this help message") do
+    puts parser
+  end
+
+end.parse!
+
+Breezer.freeze!('./test/samples/Gemfile', './test/samples/Gemfile.lock', options)
