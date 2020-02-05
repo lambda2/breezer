@@ -3,8 +3,11 @@ require 'breezer'
 
 class TestParser < Minitest::Test
   def test_simple_load
-    specs = Breezer::Parser.deps(File.join(File.dirname(__FILE__), './samples/Gemfile.1.lock'))
-    assert_equal specs['colorize'][:name], 'colorize'
+    Bundler::SharedHelpers.chdir("#{File.dirname(__FILE__)}/samples") do
+      specs = Breezer::Parser.deps('Gemfile.lock')
+      puts specs['colorize'].inspect
+      assert_equal specs['colorize'].name, 'colorize'
+    end
   end
 
 end

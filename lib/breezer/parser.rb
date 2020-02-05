@@ -10,11 +10,11 @@ class Breezer::Parser
     dependencies = gems_hash.keys && gems_hash.values.map { |h| h[:dependencies] }.flatten.uniq.sort
     dependencies.each { |dep| gems_hash.delete(dep) }
 
-    relevant_specs = gems_hash.values.map { |h| h[:spec] }
+    relevant_specs = gems_hash.values.map { |h| [h[:spec].name, h[:spec].version] }.to_h
 
     if options[:debug]
       puts "Mapped dependencies:"
-      relevant_specs.each {|e| puts "#{e.name} #{e.version}"}
+      relevant_specs.each {|name, version| puts "#{name} #{version}"}
     end
     relevant_specs
   end
