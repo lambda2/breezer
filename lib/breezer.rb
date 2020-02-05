@@ -12,7 +12,7 @@ class Breezer
     gemfile = Bundler.read_file(absolute_gemfile_path)
     updated_gemfile = Freezer.update_gemfile!(gemfile, deps, options)
     
-    File.write!(absolute_gemfile_path, updated_gemfile)
+    File.write(absolute_gemfile_path, updated_gemfile)
   end
 end
 

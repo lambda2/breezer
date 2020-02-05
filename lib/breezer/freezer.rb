@@ -4,6 +4,7 @@ require 'bundler'
 class Breezer::Freezer
 
   GEM_REGEX = /gem[\s\t]+(?<name>['"][\w\-_]+['"])(?<fullversion>,?[\s\t]?(?<version>['"][~><=]+[\s\t]?[\d\.]+['"]))?(?<fullsecversion>,?[\s\t]?(?<secversion>['"][~><=]+[\s\t]?[\d\.]+['"]))?/
+  
   def self.update_gemfile!(gemfile, deps, **options)
     new_gemfile = []
     gemfile.split("\n").each {|line| new_gemfile << parse(line, deps, options) }
@@ -13,6 +14,10 @@ class Breezer::Freezer
   end
 
   def self.parse(line, deps, **options)
+
+    puts "  Parsing line: '#{line}'"
+    matches = line.match(GEM_REGEX)
+    puts "  MATCHES: #{matches.inspect}"
     # Drop lines if no gem declared
     return line unless line =~ /gem[\s\t]+/
 
@@ -27,6 +32,7 @@ class Breezer::Freezer
     good_version = deps[matches[:name]]
     version_string = get_version_string()
     
+    puts "  Adding version: '#{version_string}'"
     # return the line if we didn't find a version
     return line unless good_version
 
