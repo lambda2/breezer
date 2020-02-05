@@ -15,7 +15,8 @@ Gem::Specification.new do |s|
 
   s.homepage = %q{http://rubygems.org/gems/breezer}
   s.require_paths = ["lib"]
-  s.summary = %q{BunFreezer!}
+  s.summary = %q{Breezer!}
+  s.license       = 'MIT'
 
 end
 
