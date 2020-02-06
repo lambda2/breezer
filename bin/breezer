@@ -45,6 +45,11 @@ OptionParser.new do |parser|
     puts parser
     exit(0)
   end
+
+  parser.on('-v', '--version', 'Show version') do
+    puts Breezer::VERSION
+    exit(0)
+  end
 end.parse!
 
 unless File.file?(gemfile_file)

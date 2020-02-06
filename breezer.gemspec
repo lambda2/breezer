@@ -1,13 +1,17 @@
 # frozen_string_literal: true
+# -*- encoding: utf-8 -*-
+$LOAD_PATH.push File.expand_path("../lib", __FILE__)
+require "breezer/version"
 
 Gem::Specification.new do |s|
-  s.name               = 'breezer'
-  s.version            = '0.5.0'
+  s.name = 'breezer'
+  s.version = Breezer::VERSION
 
   s.authors = ['André Aubin']
   s.date = '2020-02-05'
   s.description = 'Automatically set versions in your Gemfile'
   s.email = 'hello@andral.xyz'
+
   glob = ->(patterns) { s.files & Dir[*patterns] }
 
   s.files = `git ls-files`.split($INPUT_RECORD_SEPARATOR)

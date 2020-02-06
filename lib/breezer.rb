@@ -57,3 +57,4 @@ end
 
 require 'breezer/parser'
 require 'breezer/freezer'
+require 'breezer/version'
