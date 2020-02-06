@@ -1,12 +1,13 @@
 PATH
   remote: .
   specs:
-    breezer (0.0.1)
+    breezer (0.1.0)
       bundler (> 1.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
+    bump (0.8.0)
     minitest (5.14.0)
     minitest-around (0.5.0)
       minitest (~> 5.0)
@@ -17,6 +18,7 @@ PLATFORMS
 
 DEPENDENCIES
   breezer!
+  bump
   minitest
   minitest-around
   rake (>= 10.0.0)

@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name               = "breezer"
-  s.version            = "0.0.1"
+  s.version            = "0.1.0"
 
   s.authors = ["André Aubin"]
   s.date = '2020-02-05'
@@ -20,11 +20,11 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version     = ">= 2.4.0"
   s.required_rubygems_version = ">= 2.7.0"
-  
+
   s.add_development_dependency "rake", ">= 10.0.0"
   s.add_development_dependency "minitest"
   s.add_development_dependency "minitest-around"
+  s.add_development_dependency 'bump'
 
   s.add_runtime_dependency("bundler", "> 1.0")
 end
-
