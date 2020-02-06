@@ -28,8 +28,7 @@ Usage: breezer DIR [options]
     -h, --help                       Show this help message
 ```
 
-Library
------
+## Library
 
 ```ruby
 require 'breezer'
@@ -39,13 +38,11 @@ Breezer.freeze!('Gemfile', 'Gemfile.lock', {level: :minor})
 
 ## Requirements
 
-
-* Bundler 2
+* `bundler`
 
 ## Install
 
-
-* gem install breezer
+* `gem install breezer`
 
 ## License
 
@@ -53,14 +50,7 @@ Breezer.freeze!('Gemfile', 'Gemfile.lock', {level: :minor})
 
 ## Authors
 
-* [Peter Leitzen](https://github.com/splattael)
-
-## [Contributors](https://github.com/splattael/minitest-around/graphs/contributors)
-
-* [Michael Grosser](https://github.com/grosser)
-* [Hendra Uzia](https://github.com/hendrauzia)
-* [Rick Martínez](https://github.com/rickmzp)
-* [Philip Nelson](https://github.com/pnelson)
+* [André Aubin](https://github.com/lambda2)
 
 ## Contributing
 
