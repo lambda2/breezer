@@ -1,0 +1,29 @@
+source 'https://rubygems.org'
+git_source(:github) {|repo| "https://github.com/#{repo}.git" }
+
+ruby '2.6.5'
+
+gem 'colorize', '~> 0.8'
+
+gem 'ruby-progressbar', '~> 1.10'
+
+gem 'bootsnap', '~> 1.4', require: false
+
+group :development, :test do
+  gem 'bullet', '~> 6.1'
+  gem 'byebug', '~> 11.1', platforms: %i[mri mingw x64_mingw]
+  gem 'rubocop', '~> 0.79'
+end
+
+group :development do
+  gem 'listen', '~> 3.1'
+  gem 'web-console', '~> 4.0'
+  gem 'spring', '~> 2.1'
+  gem 'spring-watcher-listen', '~> 2.0'
+end
+
+group :test do
+  gem 'simplecov', '~> 0.18', require: false
+end
+
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

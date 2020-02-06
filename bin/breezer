@@ -19,7 +19,7 @@ options = {
 OptionParser.new do |parser|
   parser.banner = "Usage: breezer DIR [options]"
 
-  parser.on("-l", "--level LEVEL", "Set the minimum level of gem updates (default: patch). Set to 'exact' to lock gems versions (not recommended)") do |v|
+  parser.on("-l", "--level LEVEL", "Set the minimum level of gem updates (default: patch). Set to 'exact' to lock gems versions (not recommended).") do |v|
     raise "Error: level must be one of: 'major', 'minor', 'patch' or 'exact', #{v} given." unless ['major', 'minor', 'patch', 'exact'].include?(v)
     options[:level] = v
   end
@@ -34,6 +34,10 @@ OptionParser.new do |parser|
 
   parser.on("-o", "--output FILE", "The output file (default: Gemfile)") do |v|
     options[:output] = v
+  end
+
+  parser.on("-c", "--check", "Check that all gems have version constraints") do |v|
+    options[:check] = true
   end
 
   parser.on("-h", "--help", "Show this help message") do
@@ -53,4 +57,5 @@ if !File.file?(lockfile_file)
   exit(1)
 end
 
-Breezer.freeze!(gemfile_file, lockfile_file, options)
+r = Breezer.freeze!(gemfile_file, lockfile_file, options)
+exit(r == false ? 2 : 0)
