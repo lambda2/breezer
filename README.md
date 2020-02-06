@@ -1,8 +1,8 @@
 # ❄️ Breezer
 
-> [Bundle freezer]
+> /Bundle freezer/
 
-[![Gem Version](https://badge.fury.io/rb/breezer.svg)](http://badge.fury.io/rb/breezer) [![Build Status](https://travis-ci.org/lambda2/breezer.svg?branch=master)](https://travis-ci.org/lambda2/breezer) [![Code Climate](https://codeclimate.com/github/lambda2/breezer/badges/gpa.svg)](https://codeclimate.com/github/lambda2/breezer) [![Test Coverage](https://codeclimate.com/github/lambda2/breezer/badges/coverage.svg)](https://codeclimate.com/github/lambda2/breezer)
+[![Gem Version](https://badge.fury.io/rb/breezer.svg)](http://badge.fury.io/rb/breezer) 
 
 
 A cli to automatically set all your Gemfile dependencies to safe versions.
