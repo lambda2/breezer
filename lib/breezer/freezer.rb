@@ -43,6 +43,9 @@ class Breezer::Freezer
     # Drop lines if no gem declared
     return false if (line =~ /gem[\s]+/).nil?
 
+    # Skip git and github direct references
+    return false if (line =~ /(git:\/\/|(github(:|\s)))/)
+
     # Drop line if it's a comment
     return false unless (line =~ /^[\s]?#/).nil?
 
