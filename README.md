@@ -7,16 +7,14 @@
 
 A cli to automatically set all your Gemfile dependencies to safe versions.
 
-## TL;DR
-
-![video](./images/demo.gif)
-
 ## In short
 
 * Updates your Gemfile with your actual used version (from the Gemfile.lock)
 * Set if you want to constraint the exact version (ex: = 4.3.2), the patch level (ex: ~> 1.2.3) or the minor level (ex: 1.2).
 * Run a check on your Gemfile to ensure all your deps are properly constrained.
 * No deps except bundler.
+
+![video](./images/demo.gif)
 
 ## Cli
 
