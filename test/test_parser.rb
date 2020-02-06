@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'minitest/autorun'
 require 'breezer'
 
@@ -8,5 +10,4 @@ class TestParser < Minitest::Test
       assert_equal specs['colorize'], '0.8.1'
     end
   end
-
 end
