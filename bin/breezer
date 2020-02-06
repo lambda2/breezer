@@ -1,9 +1,7 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require 'bundler'
-
-puts Bundler::VERSION
-
 require 'breezer'
 require 'optparse'
 
@@ -17,42 +15,44 @@ options = {
 }
 
 OptionParser.new do |parser|
-  parser.banner = "Usage: breezer DIR [options]"
+  parser.banner = 'Usage: breezer DIR [options]'
 
-  parser.on("-l", "--level LEVEL", "Set the minimum level of gem updates (default: patch). Set to 'exact' to lock gems versions (not recommended).") do |v|
-    raise "Error: level must be one of: 'major', 'minor', 'patch' or 'exact', #{v} given." unless ['major', 'minor', 'patch', 'exact'].include?(v)
+  parser.on('-l', '--level LEVEL', "Set the minimum level of gem updates (default: patch). Set to 'exact' to lock gems versions (not recommended).") do |v|
+    unless %w[major minor patch exact].include?(v)
+      raise "Error: level must be one of: 'major', 'minor', 'patch' or 'exact', #{v} given."
+    end
+
     options[:level] = v
   end
 
-  parser.on("-L", "--lockfile NAME", "Use different lockfile (default: Gemfile.lock)") do |v|
+  parser.on('-L', '--lockfile NAME', 'Use different lockfile (default: Gemfile.lock)') do |v|
     lockfile_file = v
   end
 
-  parser.on("-d", "--dry-run", "Print the updated Gemfile instead of writing it") do
+  parser.on('-d', '--dry-run', 'Print the updated Gemfile instead of writing it') do
     options[:dry] = true
   end
 
-  parser.on("-o", "--output FILE", "The output file (default: Gemfile)") do |v|
+  parser.on('-o', '--output FILE', 'The output file (default: Gemfile)') do |v|
     options[:output] = v
   end
 
-  parser.on("-c", "--check", "Check that all gems have version constraints") do |_v|
+  parser.on('-c', '--check', 'Check that all gems have version constraints') do |_v|
     options[:check] = true
   end
 
-  parser.on("-h", "--help", "Show this help message") do
+  parser.on('-h', '--help', 'Show this help message') do
     puts parser
     exit(0)
   end
 end.parse!
 
-
-if !File.file?(gemfile_file)
+unless File.file?(gemfile_file)
   puts "Unable to find a Gemfile (searched in #{gemfile_file})"
   exit(1)
 end
 
-if !File.file?(lockfile_file)
+unless File.file?(lockfile_file)
   puts "Unable to find a Lockfile (Gemfile.lock). If you don't have a Gemfile.lock yet, you can run 'bundle install' first. (searched in #{lockfile_file})"
   exit(1)
 end

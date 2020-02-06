@@ -8,7 +8,7 @@ class Breezer::Freezer
   def self.update_gemfile!(gemfile, deps, **options)
     new_gemfile = []
     gemfile.split("\n").each { |line| new_gemfile << parse(line, deps, options) }
-    new_gemfile.join("\n")
+    [*new_gemfile, ''].join("\n")
   end
 
   def self.check_gemfile!(gemfile, deps, **options)
