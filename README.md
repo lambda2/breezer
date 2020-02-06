@@ -7,7 +7,7 @@ A cli to automatically set all your Gemfile dependancies to your current version
 
 ## TL;DR
 
-![video](https://transfer.sh/fmiqR/Kapture%202020-02-06%20at%2016.03.23.gif)
+![video](./images/demo.gif)
 
 ## In short
 
