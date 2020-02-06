@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name               = "breezer"
-  s.version            = "0.1.0"
+  s.version            = "0.2.0"
 
   s.authors = ["André Aubin"]
   s.date = '2020-02-05'
