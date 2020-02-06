@@ -4,8 +4,9 @@
 # This is our main class.
 # Call Breezer.freeze! to update the Gemfile
 #
-class Breezer
+module Breezer
   def self.freeze!(gemfile_path, lockfile_path, **options)
+    puts "Updating Gemfile #{gemfile_path}..."
     absolute_lockfile_path = File.join(lockfile_path)
     absolute_gemfile_path = File.join(gemfile_path)
     ENV['BUNDLE_GEMFILE'] = absolute_gemfile_path
@@ -21,6 +22,7 @@ class Breezer
   end
 
   def self.check_gemfile!(gemfile, deps, options)
+    puts "Checking Gemfile #{gemfile}..."
     checks = Freezer.check_gemfile!(gemfile, deps, options)
     print_check_results(checks)
     checks.values.map { |e| e[:valid] }.all?
@@ -38,6 +40,7 @@ class Breezer
       File.open(output_path, 'w') do |file|
         file.write(updated_gemfile)
       end
+      puts "Gemfile updated !"
     end
     updated_gemfile
   end

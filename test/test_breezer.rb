@@ -49,4 +49,5 @@ describe Breezer do
     specs = Breezer.freeze!('Gemfile.checked', 'Gemfile.lock', check: true)
     _(specs).must_equal true
   end
+
 end
