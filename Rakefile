@@ -1,4 +1,7 @@
 require 'rake/testtask'
+require 'bundler/setup'
+require 'bundler/gem_tasks'
+require 'bump/tasks'
 
 Rake::TestTask.new do |t|
   t.libs << 'test'
