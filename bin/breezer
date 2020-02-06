@@ -36,7 +36,7 @@ OptionParser.new do |parser|
     options[:output] = v
   end
 
-  parser.on("-c", "--check", "Check that all gems have version constraints") do |v|
+  parser.on("-c", "--check", "Check that all gems have version constraints") do |_v|
     options[:check] = true
   end
 
