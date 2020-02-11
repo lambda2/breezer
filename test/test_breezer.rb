@@ -4,7 +4,7 @@ require 'minitest/autorun'
 require 'minitest/around/spec'
 require 'breezer'
 
-describe Breezer do
+describe Breezer do # rubocop:todo Metrics/BlockLength
   around do |test|
     files = Dir["#{File.dirname(__FILE__)}/samples/*"]
     Dir.mktmpdir do |dir|

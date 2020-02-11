@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:todo Gemspec/RequiredRubyVersion
 $LOAD_PATH.push File.expand_path('lib', __dir__)
 require 'breezer/version'
 
@@ -35,3 +36,4 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency('bundler', '> 1.0')
 end
+# rubocop:enable Gemspec/RequiredRubyVersion

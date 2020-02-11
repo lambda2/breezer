@@ -2,116 +2,124 @@
 
 require 'bundler'
 
-class Breezer::Freezer
-  GEM_REGEX = /gem[\s]+(?<fullname>['"](?<name>[\w\-_]+)['"])(?<fullversion>,?[\s]?['"](?<version>[~><=]+[\s]?[\d\.]+)['"])?(?<fullsecversion>,?[\s]?['"](?<secversion>[~><=]+[\s]?[\d\.]+)['"])?/.freeze
+module Breezer
 
-  def self.update_gemfile!(gemfile, deps, **options)
-    new_gemfile = []
-    gemfile.split("\n").each { |line| new_gemfile << parse(line, deps, options) }
-    [*new_gemfile, ''].join("\n")
-  end
+  #
+  # Will update (freeze) the gems in the Gemfile
+  #
+  class Freezer
+    class << self
+      GEM_REGEX = /gem[\s]+(?<fullname>['"](?<name>[\w\-_]+)['"])(?<fullversion>,?[\s]?['"](?<version>[~><=]+[\s]?[\d\.]+)['"])?(?<fullsecversion>,?[\s]?['"](?<secversion>[~><=]+[\s]?[\d\.]+)['"])?/.freeze
 
-  def self.check_gemfile!(gemfile, deps, **options)
-    gemfile.split("\n").each_with_index.map do |line, no|
-      [no + 1, check(line, deps, options)]
-    end.to_h
-  end
+      def update_gemfile!(gemfile, deps, **options)
+        new_gemfile = []
+        gemfile.split("\n").each { |line| new_gemfile << parse(line, deps, options) }
+        [*new_gemfile, ''].join("\n")
+      end
 
-  # Parse a gemfile line, and return the line updated with dependencies
-  def self.parse(line, deps, **options)
-    return line unless valid_line?(line)
+      def check_gemfile!(gemfile, deps, **options)
+        gemfile.split("\n").each_with_index.map do |line, no|
+          [no + 1, check(line, deps, options)]
+        end.to_h
+      end
 
-    matches = line.match(GEM_REGEX)
+      # Parse a gemfile line, and return the line updated with dependencies
+      def parse(line, deps, **options)
+        return line unless valid_line?(line)
 
-    # return the line if we didn't matched a name
-    return line unless matches[:name]
+        matches = line.match(GEM_REGEX)
 
-    proposed_version = deps[matches[:name]]
-    version_string = version_for_name(proposed_version, options)
+        # return the line if we didn't matched a name
+        return line unless matches[:name]
 
-    # return the line if we didn't find a version
-    return line unless proposed_version && version_string
+        proposed_version = deps[matches[:name]]
+        version_string = version_for_name(proposed_version, options)
 
-    # if we already have a version and we don't want to override
-    return line if matches[:version] && options[:preserve]
+        # return the line if we didn't find a version
+        return line unless proposed_version && version_string
 
-    transform_line_for_version(line, matches, version_string)
-  end
+        # if we already have a version and we don't want to override
+        return line if matches[:version] && options[:preserve]
 
-  # Return false if there is no deps declaration in the given line
-  def self.valid_line?(line)
-    # Drop lines if no gem declared
-    return false if (line =~ /gem[\s]+/).nil?
+        transform_line_for_version(line, matches, version_string)
+      end
 
-    # Skip git and github direct references
-    return false if line =~ %r{(git://|(github(:|\s)))}
+      # Return false if there is no deps declaration in the given line
+      def valid_line?(line)
+        # Drop lines if no gem declared
+        return false if (line =~ /gem[\s]+/).nil?
 
-    # Drop line if it's a comment
-    return false unless (line =~ /^[\s]?#/).nil?
+        # Skip git and github direct references
+        return false if line =~ %r{(git://|(github(:|\s)))}
 
-    # Drop line if it contains a skip comment
-    return false unless (line =~ /breezer-disable/).nil?
+        # Drop line if it's a comment
+        return false unless (line =~ /^[\s]?#/).nil?
 
-    true
-  end
+        # Drop line if it contains a skip comment
+        return false unless (line =~ /breezer-disable/).nil?
 
-  # Parse a gemfile line, and return true or false wether the line is valid
-  def self.check(line, deps, **options)
-    return { valid: true } unless valid_line?(line)
+        true
+      end
 
-    matches = line.match(GEM_REGEX)
+      # Parse a gemfile line, and return true or false wether the line is valid
+      def check(line, deps, **options)
+        return { valid: true } unless valid_line?(line)
 
-    # return the line if we didn't matched a name
-    return { valid: true } unless matches[:name]
+        matches = line.match(GEM_REGEX)
 
-    proposed_version = deps[matches[:name]]
-    version_for_name(proposed_version, options)
+        # return the line if we didn't matched a name
+        return { valid: true } unless matches[:name]
 
-    # Do we have a version ?
-    {
-      name: matches[:name],
-      proposed_version: proposed_version,
-      valid: !matches[:version].nil?
-    }
-  end
+        proposed_version = deps[matches[:name]]
+        version_for_name(proposed_version, options)
 
-  # Will rewrite the old deps line with the good version
-  def self.transform_line_for_version(line, matches, version_string)
-    # We remove the other version
-    line = line.gsub(matches[:fullsecversion], '') if matches[:fullsecversion]
+        # Do we have a version ?
+        {
+          name: matches[:name],
+          proposed_version: proposed_version,
+          valid: !matches[:version].nil?
+        }
+      end
 
-    # If we had a version
-    if matches[:version]
-      line.gsub(matches[:version], version_string)
-    else
-      line.gsub(matches[:fullname], "#{matches[:fullname]}, '#{version_string}'")
-    end
-  end
+      # Will rewrite the old deps line with the good version
+      def transform_line_for_version(line, matches, version_string)
+        # We remove the other version
+        line = line.gsub(matches[:fullsecversion], '') if matches[:fullsecversion]
 
-  # Will return the Gemfile.lock version of a deps
-  def self.version_for_name(proposed_version, options)
-    get_version_string(proposed_version, options)
-  end
+        # If we had a version
+        if matches[:version]
+          line.gsub(matches[:version], version_string)
+        else
+          line.gsub(matches[:fullname], "#{matches[:fullname]}, '#{version_string}'")
+        end
+      end
 
-  # Will convert the version according to the given level (default 'patch')
-  def self.get_version_string(version, options)
-    options = { level: 'patch' }.merge(options)
+      # Will return the Gemfile.lock version of a deps
+      def version_for_name(proposed_version, options)
+        get_version_string(proposed_version, options)
+      end
 
-    gv = Gem::Version.create(version)
-    return unless gv
+      # Will convert the version according to the given level (default 'patch')
+      def get_version_string(version, options)
+        options = { level: 'patch' }.merge(options)
 
-    segments = [*gv.canonical_segments, 0, 0, 0].first(3)
-    case options[:level].to_s
-    when 'major'
-      "~> #{segments.first}"
-    when 'minor'
-      "~> #{segments.first(2).join('.')}"
-    when 'patch'
-      "~> #{segments.first(3).join('.')}"
-    when 'exact'
-      "= #{version}"
-    else
-      raise("Unsupported option: #{options[:level]}")
+        gv = Gem::Version.create(version)
+        return unless gv
+
+        segments = [*gv.canonical_segments, 0, 0, 0].first(3)
+        case options[:level].to_s
+        when 'major'
+          "~> #{segments.first}"
+        when 'minor'
+          "~> #{segments.first(2).join('.')}"
+        when 'patch'
+          "~> #{segments.first(3).join('.')}"
+        when 'exact'
+          "= #{version}"
+        else
+          raise("Unsupported option: #{options[:level]}")
+        end
+      end
     end
   end
 end

@@ -57,7 +57,7 @@ class TestBreezer < Minitest::Test
     'zeitwerk' => '2.2.2'
   }.freeze
 
-  def test_good_matchs
+  def test_good_matchs # rubocop:todo Metrics/MethodLength
     [
       [
         "gem 'colorize'",

@@ -14,10 +14,11 @@ options = {
   debug: false
 }
 
-OptionParser.new do |parser|
+OptionParser.new do |parser| # rubocop:todo Metrics/BlockLength
   parser.banner = 'Usage: breezer DIR [options]'
 
-  parser.on('-l', '--level LEVEL', "Set the minimum level of gem updates (default: patch). Set to 'exact' to lock gems versions (not recommended).") do |v|
+  parser.on('-l', '--level LEVEL', 'Set the minimum level of gem updates (default: patch).'\
+                                  ' Set to "exact" to lock gems versions (not recommended).') do |v|
     unless %w[major minor patch exact].include?(v)
       raise "Error: level must be one of: 'major', 'minor', 'patch' or 'exact', #{v} given."
     end
@@ -58,7 +59,8 @@ unless File.file?(gemfile_file)
 end
 
 unless File.file?(lockfile_file)
-  puts "Unable to find a Lockfile (Gemfile.lock). If you don't have a Gemfile.lock yet, you can run 'bundle install' first. (searched in #{lockfile_file})"
+  puts "Unable to find a Lockfile (Gemfile.lock). If you don't have a Gemfile.lock yet, "\
+       "you can run 'bundle install' first. (searched in #{lockfile_file})"
   exit(1)
 end
 
