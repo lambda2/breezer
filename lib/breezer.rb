@@ -40,7 +40,7 @@ module Breezer
       File.open(output_path, 'w') do |file|
         file.write(updated_gemfile)
       end
-      puts "Gemfile updated !"
+      puts 'Gemfile updated !'
     end
     updated_gemfile
   end

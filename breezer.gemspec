@@ -1,7 +1,7 @@
 # frozen_string_literal: true
-# -*- encoding: utf-8 -*-
-$LOAD_PATH.push File.expand_path("../lib", __FILE__)
-require "breezer/version"
+
+$LOAD_PATH.push File.expand_path('lib', __dir__)
+require 'breezer/version'
 
 Gem::Specification.new do |s|
   s.name = 'breezer'
@@ -24,13 +24,14 @@ Gem::Specification.new do |s|
   s.summary = 'Breezer!'
   s.license = 'MIT'
 
-  s.required_ruby_version     = '>= 2.4.0'
+  s.required_ruby_version     = '>= 2.1.0'
   s.required_rubygems_version = '>= 2.7.0'
 
-  s.add_development_dependency 'bump'
-  s.add_development_dependency 'minitest'
-  s.add_development_dependency 'minitest-around'
-  s.add_development_dependency 'rake', '>= 10.0.0'
+  s.add_development_dependency 'bump', '~> 0.8'
+  s.add_development_dependency 'minitest', '~> 5.14'
+  s.add_development_dependency 'minitest-around', '~> 0.5'
+  s.add_development_dependency 'rake', '~> 13.0'
+  s.add_development_dependency 'rubocop', '~> 0.79.0'
 
   s.add_runtime_dependency('bundler', '> 1.0')
 end
