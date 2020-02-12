@@ -2,6 +2,7 @@
 
 # rubocop:todo Gemspec/RequiredRubyVersion
 $LOAD_PATH.push File.expand_path('lib', __dir__)
+
 require 'breezer/version'
 
 Gem::Specification.new do |s|
