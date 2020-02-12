@@ -15,18 +15,25 @@ module Breezer
         options = parse_options({ debug: false }, args)
         lockfile_file = options[:lockfile_file] || "#{gemfile_file}.lock"
 
+        # Will raise if files are not valid
+        check_files_presence!(gemfile_file, lockfile_file)
+
+        Breezer.freeze!(gemfile_file, lockfile_file, options)
+      end
+
+      # Check that the Gemfile and the Lockfile exists
+      def check_files_presence!(gemfile_file, lockfile_file)
+
         unless File.file?(gemfile_file)
           puts "Unable to find a Gemfile (searched in #{gemfile_file})"
           raise NoGemfileException, "Unable to find a Gemfile (searched in #{gemfile_file})"
         end
 
-        unless File.file?(lockfile_file)
-          puts "Unable to find a Lockfile (Gemfile.lock). If you don't have a Gemfile.lock yet, "\
-              "you can run 'bundle install' first. (searched in #{lockfile_file})"
-          raise NoLockfileException, "Unable to find a Lockfile (Gemfile.lock) (searched in #{lockfile_file})"
-        end
+        return if File.file?(lockfile_file)
 
-        Breezer.freeze!(gemfile_file, lockfile_file, options)
+        puts "Unable to find a Lockfile (Gemfile.lock). If you don't have a Gemfile.lock yet, "\
+            "you can run 'bundle install' first. (searched in #{lockfile_file})"
+        raise NoLockfileException, "Unable to find a Lockfile (Gemfile.lock) (searched in #{lockfile_file})"
       end
 
       def get_gemfile_file(args)
@@ -74,6 +81,7 @@ module Breezer
             exit(0)
           end
         end.parse!(argv)
+        options
       end
     end
   end
