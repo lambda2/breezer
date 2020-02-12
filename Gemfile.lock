@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    breezer (0.7.2)
+    breezer (0.7.3)
       bundler (> 1.0)
 
 GEM
