@@ -12,7 +12,7 @@ module Breezer
       def run!(args)
         gemfile_file = get_gemfile_file(args)
 
-        options = parse_options({ debug: false }.merge(args))
+        options = parse_options({ debug: false }, args)
         lockfile_file = options[:lockfile_file] || "#{gemfile_file}.lock"
 
         unless File.file?(gemfile_file)
@@ -35,7 +35,7 @@ module Breezer
         File.directory?(gemfile_dir) ? File.join(gemfile_dir, 'Gemfile') : gemfile_dir
       end
 
-      def parse_options(options = { debug: false }) # rubocop:todo Metrics/AbcSize
+      def parse_options(options = { debug: false }, argv) # rubocop:todo Metrics/AbcSize
         OptionParser.new do |parser| # rubocop:todo Metrics/BlockLength
           parser.banner = 'Usage: breezer DIR [options]'
 
@@ -73,7 +73,7 @@ module Breezer
             puts Breezer::VERSION
             exit(0)
           end
-        end.parse!
+        end.parse!(argv)
       end
     end
   end
