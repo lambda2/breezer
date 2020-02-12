@@ -58,6 +58,8 @@ module Breezer
   end
 end
 
+require 'breezer/exceptions'
 require 'breezer/parser'
 require 'breezer/freezer'
 require 'breezer/version'
+require 'breezer/command'
