@@ -33,7 +33,7 @@ module Breezer
         return line unless matches[:name]
 
         proposed_version = deps[matches[:name]]
-        version_string = version_for_name(proposed_version, options)
+        version_string = get_version_string(proposed_version, options)
 
         # return the line if we didn't find a version
         return line unless proposed_version && version_string
@@ -71,7 +71,7 @@ module Breezer
         return { valid: true } unless matches[:name]
 
         proposed_version = deps[matches[:name]]
-        version_for_name(proposed_version, options)
+        get_version_string(proposed_version, options)
 
         # Do we have a version ?
         {
@@ -94,12 +94,8 @@ module Breezer
         end
       end
 
-      # Will return the Gemfile.lock version of a deps
-      def version_for_name(proposed_version, options)
-        get_version_string(proposed_version, options)
-      end
-
-      # Will convert the version according to the given level (default 'patch')
+      # Will return the Gemfile.lock version of a deps, with the version converted
+      # according to the given level (default 'patch')
       def get_version_string(version, options)
         options = { level: 'patch' }.merge(options)
 

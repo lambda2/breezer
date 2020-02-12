@@ -5,10 +5,10 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.5'
 
-gem 'colorize', '~> 0.8'
-gem 'ruby-progressbar', '~> 1.10'
 gem 'bootsnap', '~> 1.4', require: false
 gem 'carrierwave-azure', github: 'tsara27/carrierwave-azure'
+gem 'colorize', '~> 0.8'
+gem 'ruby-progressbar', '~> 1.10'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 # gem 'cancancan', '~> 1.10'
 gem 'rack', git: 'git://github.com/rack/rack.git'
