@@ -1,0 +1,43 @@
+PATH
+  remote: .
+  specs:
+    breezer (0.10.0)
+      bundler (> 1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    ast (2.4.0)
+    bump (0.8.0)
+    jaro_winkler (1.5.4)
+    minitest (5.14.0)
+    minitest-around (0.5.0)
+      minitest (~> 5.0)
+    parallel (1.19.1)
+    parser (2.7.0.2)
+      ast (~> 2.4.0)
+    rainbow (3.0.0)
+    rake (13.0.1)
+    rubocop (0.79.0)
+      jaro_winkler (~> 1.5.1)
+      parallel (~> 1.10)
+      parser (>= 2.7.0.1)
+      rainbow (>= 2.2.2, < 4.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 1.4.0, < 1.7)
+    ruby-progressbar (1.10.1)
+    unicode-display_width (1.6.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  breezer!
+  bump (~> 0.8)
+  minitest (~> 5.14)
+  minitest-around (~> 0.5)
+  rake (~> 13.0)
+  rubocop (~> 0.79.0)
+
+BUNDLED WITH
+   2.1.4

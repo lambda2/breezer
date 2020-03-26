@@ -1,0 +1,14 @@
+Metrics/CyclomaticComplexity:
+  Max: 8
+
+Metrics/MethodLength:
+  Max: 35
+
+Layout/LineLength:
+  Max: 100
+
+Layout/EmptyLinesAroundModuleBody:
+  Enabled: false
+
+Style/FormatStringToken:
+  Enabled: false

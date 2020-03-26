@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'bundler'
+require 'breezer'
+
+r = Breezer::Command.run!(ARGV)
+exit(r == false ? 2 : 0)
