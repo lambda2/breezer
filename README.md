@@ -2,8 +2,7 @@
 
 > /Bundle freezer/
 
-[![Gem Version](https://badge.fury.io/rb/breezer.svg)](http://badge.fury.io/rb/breezer) 
-
+[![Gem Version](https://badge.fury.io/rb/breezer.svg)](https://badge.fury.io/rb/breezer) [![Build Status](https://travis-ci.org/lambda2/breezer.png?branch=master)](https://travis-ci.org/lambda2/breezer)
 
 A cli to automatically set all your Gemfile dependencies to safe versions.
 
@@ -13,6 +12,7 @@ A cli to automatically set all your Gemfile dependencies to safe versions.
 * Set if you want to constraint the exact version (ex: = 4.3.2), the patch level (ex: ~> 1.2.3) or the minor level (ex: 1.2).
 * Run a check on your Gemfile to ensure all your deps are properly constrained.
 * No deps except bundler.
+* Tested against the latest Ruby 2.4.x, 2.5.x, 2.6.x, 2.7.x & JRuby. See [`.travis-ci.yml`](https://github.com/lambda2/breezer/blob/master/.travis.yml) for the exact versions.
 
 ![video](./images/demo.gif)
 

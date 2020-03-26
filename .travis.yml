@@ -1,0 +1,30 @@
+os: linux
+
+language: ruby
+
+rvm:
+  - 2.7
+  - 2.6
+  - 2.5
+  - 2.4
+  - jruby-9.2.8.0
+
+jdk:
+  - openjdk8
+
+jobs:
+  fast_finish: true
+
+env:
+  global:
+    - JRUBY_OPTS="--debug"
+
+bundler_args: --without development
+
+cache: bundler
+
+before_install:
+  - gem install bundler
+
+script:
+  - bundle exec rake
