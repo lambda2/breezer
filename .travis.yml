@@ -1,5 +1,3 @@
-os: linux
-
 language: ruby
 
 rvm:
@@ -8,13 +6,5 @@ rvm:
   - 2.5
   - 2.4
 
-jobs:
-  fast_finish: true
-
-bundler_args: --without development
-
 cache: bundler
-
-before_install:
-  - gem install bundler
 
