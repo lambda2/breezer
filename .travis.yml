@@ -17,7 +17,4 @@ cache: bundler
 
 before_install:
   - gem install bundler
-  - gem install rake
 
-script:
-  - bundle exec rake
